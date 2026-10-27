@@ -1,0 +1,22 @@
+{
+  "models": [
+    "qwen3:30b",
+    "qwen3.8:27b"
+  ],
+  "debate_rounds": 1,
+  "risk_rounds": 1,
+  "max_output_tokens_per_call": 2048,
+  "outcome": "INSUFFICIENT_DATA",
+  "duration_seconds": 1811.5550367087126,
+  "python_maxrss_platform_units": 209944576,
+  "quarantined_outputs": 15,
+  "blocked_claims": 15,
+  "validated_references": 0,
+  "token_accounting": {
+    "llm_calls": 15,
+    "tool_calls": 0,
+    "tokens_in": 293980,
+    "tokens_out": 30720
+  },
+  "limitations": "Frozen ledger replaces analyst tools, other agents unchanged. Python memory excludes Ollama. This is not an exact replay of the original report."
+}

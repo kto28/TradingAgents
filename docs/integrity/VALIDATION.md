@@ -83,6 +83,24 @@ aborted experiment in `ollama_limit_probe.json`, not a successful run.
 
 ## Remaining limits
 
+The completed real multi-agent experiment took **1,811.56 seconds (30.19
+minutes)** with the unchanged 30B/27B models and one round of each debate.
+It made **15 LLM calls**, including structured-output fallbacks, consumed
+**293,980 input / 30,720 output tokens**, and returned **INSUFFICIENT_DATA**.
+All calls reached the experimental 2,048-token cap; **zero evidence references
+were accepted** and **15 outputs were quarantined**. This demonstrates safe
+failure under an insufficient generation budget, not satisfactory analyst
+output quality. Python max RSS was 209,944,576 bytes, excluding Ollama.
+
+Metrics are committed in `examples/integrity/nvda_model_run/metrics.json`.
+The raw diagnostic reports remain local. The implementation was being hardened
+while this experiment ran; `revalidate_model_run.py` reapplies the final
+deterministic adapters/gates to its saved output with no additional model calls.
+The primary revised NVDA report is the separate `nvda_revised/complete_report.md`.
+The full experiment's prompt used the verbose ledger; the final implementation
+keeps required citation fields in prompts and full metadata in the evidence
+artifact. No unmeasured speed improvement is claimed.
+
 The live adapter does not independently corroborate Yahoo prices. Original
 issuer documents are authoritative evidence of reported figures, not a proof
 that management's accounting or forecasts are infallible. General semantic
