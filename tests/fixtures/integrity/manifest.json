@@ -1,0 +1,31 @@
+{
+  "retrieved_at": "2026-10-27T15:45:53.083954+00:00",
+  "files": [
+    {
+      "file": "nvda_companyfacts.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
+      "sha256": "19ef503a5770f5660964b3c3aea6937579d9b359da344afe6a9adf59c63d26ff"
+    },
+    {
+      "file": "0001199039-26-000012.xml",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000119903926000012/wk-form4_1788387031.xml",
+      "sha256": "d22cd5d85d32dbf39d62d7d6e599089411c4c11191642ab3618ab8c2dbcb7d33"
+    },
+    {
+      "file": "0001628280-26-060177.xml",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000162828026060177/primary_doc.xml",
+      "sha256": "1622fe8ce09a071c7c27e72eac87460503c282a6b1578c001054e2c9db20a0cb"
+    },
+    {
+      "file": "0001588670-26-000010.xml",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000158867026000010/wk-form4_1774051632.xml",
+      "sha256": "d33d465070e9a299042c7d3808fa1518edf8c2eb711314c67ed7256ba04896fb"
+    },
+    {
+      "file": "0001197649-26-000005.xml",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000119764926000005/wk-form4_1774051558.xml",
+      "sha256": "7d476a0ced701858eaef08763c51c36d2c4963f9fef08b868b9e4de1d29657f5"
+    }
+  ],
+  "failures": []
+}

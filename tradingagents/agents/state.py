@@ -43,6 +43,14 @@ class RiskDebateState(TypedDict):
 
 
 class AgentState(MessagesState):
+    verification_mode: str
+    evidence: dict
+    claim_audit: list[dict]
+    quarantined_outputs: list[dict]
+    market_validation: dict
+    insider_filings: list[dict]
+    decision_validation: dict
+    validated_trade_plan: dict
     company_of_interest: Annotated[str, "Company that we are interested in trading"]
     asset_type: Annotated[str, "Asset type under analysis such as stock or crypto"]
     instrument_context: Annotated[str, "Deterministic ticker identity resolved at run start"]

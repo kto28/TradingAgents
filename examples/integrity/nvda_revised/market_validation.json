@@ -1,0 +1,38 @@
+{
+  "values": {
+    "sma_10": 217.58800201416017,
+    "sma_20": 224.89850158691405,
+    "sma_50": 222.21576385498048,
+    "sma_100": 214.25226669311525,
+    "sma_200": 203.51919593811036,
+    "ema_10": 217.99251619938957,
+    "ema_20": 221.02572343184283,
+    "ema_50": 220.63338099065194,
+    "rsi_14": 44.136661661874356,
+    "macd_12_26": -2.706766027378393,
+    "macd_signal_9": -0.9178004879592467,
+    "macd_histogram": -1.7889655394191462,
+    "atr_14": 6.111686782627771,
+    "bollinger_middle": 224.89850158691405,
+    "bollinger_upper": 242.35100681170957,
+    "bollinger_lower": 207.44599636211854,
+    "volume_sma_20": 102712160.0,
+    "price": 216.0
+  },
+  "breakout": false,
+  "fresh": true,
+  "bar_date": "2026-10-26",
+  "session": {
+    "phase": "REGULAR",
+    "as_of_utc": "2026-10-27T15:17:23+00:00",
+    "market_local": "2026-10-27T11:17:23-04:00",
+    "user_local": "2026-10-27T23:17:23+08:00",
+    "last_completed_session": "2026-10-26",
+    "last_completed_close": "2026-10-26T20:00:00+00:00",
+    "calendar": "XNYS"
+  },
+  "input_sha256": "e087571c0f6804574ac532f5a134d13edd6373f97d2ade93a56d1c3419e111eb",
+  "rows": 1253,
+  "parameters": "SMA 10/20/50/100/200; EMA 10/20/50 adjust=False; Wilder RSI/ATR 14; MACD 12/26/9; BB 20/2 ddof=0; volume SMA20; breakout prior20 high and volume>1.5x prior20 mean",
+  "limitations": "Single vendor OHLCV; verify split/dividend adjustments. Signals do not establish institutional activity or guaranteed support."
+}

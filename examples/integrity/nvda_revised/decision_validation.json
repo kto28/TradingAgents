@@ -1,0 +1,11 @@
+{
+  "outcome": "INSUFFICIENT_DATA",
+  "signal_actionable": false,
+  "execution_enabled": false,
+  "reasons": [
+    "missing_or_unverified:price",
+    "material_claims_failed_gate"
+  ],
+  "risk": null,
+  "historical_win_rate": "NOT ESTABLISHED"
+}

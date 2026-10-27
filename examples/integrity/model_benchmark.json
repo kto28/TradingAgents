@@ -1,0 +1,307 @@
+{
+  "limitations": "Two tiny contract probes per model; not an accuracy guarantee, full research benchmark or measured semantic hallucination rate. Memory is post-request residency, not peak consumption.",
+  "prompt": "Use only this frozen evidence. Return one JSON object, no additional claims. Required keys: revenue (base USD), gross_margin (fraction calculated from evidence), huang_trust_transfer_is_purchase (bool), stevens_liquidated (bool), invalid_long_plan_accepted (bool), confidence (null unless calibrated), decision, source_ids (array). No independently verified current price is available. Choose BUY/SELL/HOLD/WATCHLIST/INSUFFICIENT_DATA. A proposed NEW_LONG has entry=100 stop=105 target=120: is it valid? There is no historical calibration. SEC Huang Form 4 0001197649-26-000005 shows G transfers between trusts, not purchases. SEC Stevens Form 4 0001199039-26-000012 shows 3,358,770 shares remaining in the sale trust plus 11,544,612 directly held and 15,017,750 in another trust. Cite only the two numeric evidence IDs below. Evidence:\n[{\"id\": \"revenue:USD:2026-04-27:2026-07-26:0001045810-26-000075:Revenues\", \"ticker\": \"NVDA\", \"metric\": \"revenue\", \"value\": 96221000000.0, \"unit\": \"USD\", \"currency\": \"USD\", \"period_start\": \"2026-04-27\", \"period_end\": \"2026-07-26\", \"fiscal_period\": \"2026-04-27 / 2026-07-26\", \"observed_at\": \"2026-07-26T00:00:00Z\", \"available_at\": \"2026-08-27T03:59:59Z\", \"retrieved_at\": \"2026-10-27T15:45:53.083954Z\", \"source_ids\": [\"0001045810-26-000075\"], \"status\": \"VERIFIED\", \"method\": \"sec_xbrl\", \"nature\": \"reported\", \"inputs\": [], \"issues\": []}, {\"id\": \"gross_profit:USD:2026-04-27:2026-07-26:0001045810-26-000075:GrossProfit\", \"ticker\": \"NVDA\", \"metric\": \"gross_profit\", \"value\": 72142000000.0, \"unit\": \"USD\", \"currency\": \"USD\", \"period_start\": \"2026-04-27\", \"period_end\": \"2026-07-26\", \"fiscal_period\": \"2026-04-27 / 2026-07-26\", \"observed_at\": \"2026-07-26T00:00:00Z\", \"available_at\": \"2026-08-27T03:59:59Z\", \"retrieved_at\": \"2026-10-27T15:45:53.083954Z\", \"source_ids\": [\"0001045810-26-000075\"], \"status\": \"VERIFIED\", \"method\": \"sec_xbrl\", \"nature\": \"reported\", \"inputs\": [], \"issues\": []}]",
+  "expected": {
+    "revenue": 96221000000.0,
+    "gross_margin": 0.7497531723844068,
+    "huang_trust_transfer_is_purchase": false,
+    "stevens_liquidated": false,
+    "invalid_long_plan_accepted": false,
+    "confidence": null,
+    "decision": "INSUFFICIENT_DATA"
+  },
+  "results": [
+    {
+      "model": "qwen3.8:27b",
+      "repeat": 0,
+      "schema_compliant": true,
+      "field_error_rate": 0.0,
+      "field_errors": {
+        "revenue": false,
+        "gross_margin": false,
+        "huang_trust_transfer_is_purchase": false,
+        "stevens_liquidated": false,
+        "invalid_long_plan_accepted": false,
+        "confidence": false,
+        "decision": false
+      },
+      "citation_valid": false,
+      "financial_calculation_correct": true,
+      "trade_rule_violations": 0,
+      "unsupported_fields": [],
+      "unsupported_claim_rate": null,
+      "wall_seconds": 13.486084083095193,
+      "input_tokens": 868,
+      "output_tokens": 137,
+      "ollama_eval_nanoseconds": 6861276000,
+      "loaded_model_memory_bytes": [
+        {
+          "name": "qwen3.8:27b",
+          "size": 18150546471,
+          "size_vram": 18150546471
+        }
+      ],
+      "response": {
+        "revenue": 96221000000.0,
+        "gross_margin": 0.7497531734341776,
+        "huang_trust_transfer_is_purchase": false,
+        "stevens_liquidated": false,
+        "invalid_long_plan_accepted": false,
+        "confidence": null,
+        "decision": "INSUFFICIENT_DATA",
+        "source_ids": [
+          "0001045810-26-000075"
+        ]
+      }
+    },
+    {
+      "model": "qwen3.8:27b",
+      "repeat": 1,
+      "schema_compliant": true,
+      "field_error_rate": 0.0,
+      "field_errors": {
+        "revenue": false,
+        "gross_margin": false,
+        "huang_trust_transfer_is_purchase": false,
+        "stevens_liquidated": false,
+        "invalid_long_plan_accepted": false,
+        "confidence": false,
+        "decision": false
+      },
+      "citation_valid": false,
+      "financial_calculation_correct": true,
+      "trade_rule_violations": 0,
+      "unsupported_fields": [],
+      "unsupported_claim_rate": null,
+      "wall_seconds": 7.149996958673,
+      "input_tokens": 868,
+      "output_tokens": 137,
+      "ollama_eval_nanoseconds": 6856059000,
+      "loaded_model_memory_bytes": [
+        {
+          "name": "qwen3.8:27b",
+          "size": 18150546471,
+          "size_vram": 18150546471
+        }
+      ],
+      "response": {
+        "revenue": 96221000000.0,
+        "gross_margin": 0.7497531734341776,
+        "huang_trust_transfer_is_purchase": false,
+        "stevens_liquidated": false,
+        "invalid_long_plan_accepted": false,
+        "confidence": null,
+        "decision": "INSUFFICIENT_DATA",
+        "source_ids": [
+          "0001045810-26-000075"
+        ]
+      }
+    },
+    {
+      "model": "qwen3:30b",
+      "repeat": 0,
+      "schema_compliant": true,
+      "field_error_rate": 0.14285714285714285,
+      "field_errors": {
+        "revenue": false,
+        "gross_margin": true,
+        "huang_trust_transfer_is_purchase": false,
+        "stevens_liquidated": false,
+        "invalid_long_plan_accepted": false,
+        "confidence": false,
+        "decision": false
+      },
+      "citation_valid": false,
+      "financial_calculation_correct": false,
+      "trade_rule_violations": 0,
+      "unsupported_fields": [],
+      "unsupported_claim_rate": null,
+      "wall_seconds": 12.984371707774699,
+      "input_tokens": 865,
+      "output_tokens": 140,
+      "ollama_eval_nanoseconds": 1347690000,
+      "loaded_model_memory_bytes": [
+        {
+          "name": "qwen3:30b",
+          "size": 18998120938,
+          "size_vram": 18998120938
+        },
+        {
+          "name": "qwen3.8:27b",
+          "size": 18150546471,
+          "size_vram": 18150546471
+        }
+      ],
+      "response": {
+        "revenue": 96221000000.0,
+        "gross_margin": 72142000000.0,
+        "huang_trust_transfer_is_purchase": false,
+        "stevens_liquidated": false,
+        "invalid_long_plan_accepted": false,
+        "confidence": null,
+        "decision": "INSUFFICIENT_DATA",
+        "source_ids": [
+          "0001197649-26-000005",
+          "0001199039-26-000012"
+        ]
+      }
+    },
+    {
+      "model": "qwen3:30b",
+      "repeat": 1,
+      "schema_compliant": true,
+      "field_error_rate": 0.14285714285714285,
+      "field_errors": {
+        "revenue": false,
+        "gross_margin": true,
+        "huang_trust_transfer_is_purchase": false,
+        "stevens_liquidated": false,
+        "invalid_long_plan_accepted": false,
+        "confidence": false,
+        "decision": false
+      },
+      "citation_valid": false,
+      "financial_calculation_correct": false,
+      "trade_rule_violations": 0,
+      "unsupported_fields": [],
+      "unsupported_claim_rate": null,
+      "wall_seconds": 1.4474753327667713,
+      "input_tokens": 865,
+      "output_tokens": 140,
+      "ollama_eval_nanoseconds": 1340895000,
+      "loaded_model_memory_bytes": [
+        {
+          "name": "qwen3:30b",
+          "size": 18998120938,
+          "size_vram": 18998120938
+        },
+        {
+          "name": "qwen3.8:27b",
+          "size": 18150546471,
+          "size_vram": 18150546471
+        }
+      ],
+      "response": {
+        "revenue": 96221000000.0,
+        "gross_margin": 72142000000.0,
+        "huang_trust_transfer_is_purchase": false,
+        "stevens_liquidated": false,
+        "invalid_long_plan_accepted": false,
+        "confidence": null,
+        "decision": "INSUFFICIENT_DATA",
+        "source_ids": [
+          "0001197649-26-000005",
+          "0001199039-26-000012"
+        ]
+      }
+    },
+    {
+      "model": "qwen3:8b",
+      "repeat": 0,
+      "schema_compliant": true,
+      "field_error_rate": 0.14285714285714285,
+      "field_errors": {
+        "revenue": false,
+        "gross_margin": true,
+        "huang_trust_transfer_is_purchase": false,
+        "stevens_liquidated": false,
+        "invalid_long_plan_accepted": false,
+        "confidence": false,
+        "decision": false
+      },
+      "citation_valid": true,
+      "financial_calculation_correct": false,
+      "trade_rule_violations": 0,
+      "unsupported_fields": [],
+      "unsupported_claim_rate": null,
+      "wall_seconds": 14.044896207749844,
+      "input_tokens": 871,
+      "output_tokens": 192,
+      "ollama_eval_nanoseconds": 2637085000,
+      "loaded_model_memory_bytes": [
+        {
+          "name": "qwen3:8b",
+          "size": 6079350046,
+          "size_vram": 6079350046
+        },
+        {
+          "name": "qwen3:30b",
+          "size": 18998120938,
+          "size_vram": 18998120938
+        },
+        {
+          "name": "qwen3.8:27b",
+          "size": 18150546471,
+          "size_vram": 18150546471
+        }
+      ],
+      "response": {
+        "revenue": 96221000000.0,
+        "gross_margin": 0.75,
+        "huang_trust_transfer_is_purchase": false,
+        "stevens_liquidated": false,
+        "invalid_long_plan_accepted": false,
+        "confidence": null,
+        "decision": "INSUFFICIENT_DATA",
+        "source_ids": [
+          "revenue:USD:2026-04-27:2026-07-26:0001045810-26-000075:Revenues",
+          "gross_profit:USD:2026-04-27:2026-07-26:0001045810-26-000075:GrossProfit"
+        ]
+      }
+    },
+    {
+      "model": "qwen3:8b",
+      "repeat": 1,
+      "schema_compliant": true,
+      "field_error_rate": 0.14285714285714285,
+      "field_errors": {
+        "revenue": false,
+        "gross_margin": true,
+        "huang_trust_transfer_is_purchase": false,
+        "stevens_liquidated": false,
+        "invalid_long_plan_accepted": false,
+        "confidence": false,
+        "decision": false
+      },
+      "citation_valid": true,
+      "financial_calculation_correct": false,
+      "trade_rule_violations": 0,
+      "unsupported_fields": [],
+      "unsupported_claim_rate": null,
+      "wall_seconds": 2.7181304171681404,
+      "input_tokens": 871,
+      "output_tokens": 192,
+      "ollama_eval_nanoseconds": 2617714000,
+      "loaded_model_memory_bytes": [
+        {
+          "name": "qwen3:8b",
+          "size": 6079350046,
+          "size_vram": 6079350046
+        },
+        {
+          "name": "qwen3:30b",
+          "size": 18998120938,
+          "size_vram": 18998120938
+        },
+        {
+          "name": "qwen3.8:27b",
+          "size": 18150546471,
+          "size_vram": 18150546471
+        }
+      ],
+      "response": {
+        "revenue": 96221000000.0,
+        "gross_margin": 0.75,
+        "huang_trust_transfer_is_purchase": false,
+        "stevens_liquidated": false,
+        "invalid_long_plan_accepted": false,
+        "confidence": null,
+        "decision": "INSUFFICIENT_DATA",
+        "source_ids": [
+          "revenue:USD:2026-04-27:2026-07-26:0001045810-26-000075:Revenues",
+          "gross_profit:USD:2026-04-27:2026-07-26:0001045810-26-000075:GrossProfit"
+        ]
+      }
+    }
+  ]
+}

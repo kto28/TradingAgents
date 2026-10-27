@@ -29,11 +29,11 @@ def create_aggressive_debator(llm):
 
         trader_decision = state["trader_investment_plan"]
 
-        prompt = f"""As the Aggressive Risk Analyst, your role is to actively champion high-reward, high-risk opportunities, emphasizing bold strategies and competitive advantages. When evaluating the trader's decision or plan, focus intently on the potential upside, growth potential, and innovative benefits—even when these come with elevated risk. Use the provided market data and sentiment analysis to strengthen your arguments and challenge the opposing views. Specifically, respond directly to each point made by the conservative and neutral analysts, countering with data-driven rebuttals and persuasive reasoning. Highlight where their caution might miss critical opportunities or where their assumptions may be overly conservative. Here is the trader's decision:
+        prompt = f"""As the Aggressive Risk Analyst, evaluate the upside scenario and its failure conditions using retrieved evidence. Do not advocate risk-taking by default. Distinguish facts from hypotheses and defer financial arithmetic to the deterministic risk engine. Here is the trader's decision:
 
 {trader_decision}
 
-Your task is to create a compelling case for the trader's decision by questioning and critiquing the conservative and neutral stances to demonstrate why your high-reward perspective offers the best path forward. Incorporate insights from the following sources into your arguments:
+Check whether the proposed upside compensates for costs, slippage and uncertainty. Accept valid counterevidence from other analysts. Use only the following retrieved sources:
 
 {instrument_context}
 {portfolio_context}
@@ -43,7 +43,7 @@ Latest World Affairs Report: {news_report}
 Company Fundamentals Report: {fundamentals_report}
 Here is the current conversation history: {history} Here are the last arguments from the conservative analyst: {current_conservative_response} Here are the last arguments from the neutral analyst: {current_neutral_response}. If there are no responses from the other viewpoints yet, present your own argument based on the available data.
 
-Engage actively by addressing any specific concerns raised, refuting the weaknesses in their logic, and asserting the benefits of risk-taking to outpace market norms. Maintain a focus on debating and persuading, not just presenting data. Challenge each counterpoint to underscore why a high-risk approach is optimal. Output conversationally as if you are speaking without any special formatting.""" + get_language_instruction()
+Assess evidence quality rather than rhetorical force. Missing data is UNKNOWN. Repetition is not independent corroboration. Do not invent confidence or win-rate estimates, and never claim a stop guarantees maximum loss. Follow any evidence-output contract in the instrument context.""" + get_language_instruction()
 
         response = llm.invoke(prompt)
 

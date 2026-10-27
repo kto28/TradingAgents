@@ -1,0 +1,32 @@
+{
+  "baseline": {
+    "sha256": "8deba873640038ece6556432cc3ade74aecb8ec007eea3aa1baa48855aa95f4e",
+    "bytes": 48129,
+    "original_recommendation": "Underweight",
+    "reported_runtime_minutes": 31.5,
+    "exact_replay_available": false,
+    "original_tokens_and_peak_memory": null,
+    "limitation": "Original raw tool responses, prompt transcripts and sampling state not captured."
+  },
+  "upgraded": {
+    "decision": {
+      "outcome": "INSUFFICIENT_DATA",
+      "signal_actionable": false,
+      "execution_enabled": false,
+      "reasons": [
+        "missing_or_unverified:price",
+        "material_claims_failed_gate"
+      ],
+      "risk": null,
+      "historical_win_rate": "NOT ESTABLISHED"
+    },
+    "facts": 380,
+    "sources": 15,
+    "raw_llm_calls": 0,
+    "llm_tokens": 0,
+    "runtime_seconds": 0.5243089580908418,
+    "python_maxrss_platform_units": 192036864
+  },
+  "comparison_type": "deterministic revalidation of a reconstructed historical snapshot, not a repeat of the stochastic multi-agent run",
+  "agent_agreement": "Not measured; repetition is not independent evidence"
+}

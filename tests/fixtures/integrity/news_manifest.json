@@ -1,0 +1,28 @@
+{
+  "retrieved_at": "2026-10-27T16:03:07.632058+00:00",
+  "files": [
+    {
+      "name": "anthropic_google_broadcom.html",
+      "provider": "Anthropic",
+      "url": "https://www.anthropic.com/news/google-broadcom-partnership-compute",
+      "published_at": "2026-04-06T23:59:59-04:00",
+      "source_class": "official_company",
+      "quotes": [
+        "We have signed a new agreement with Google and Broadcom for multiple gigawatts of next-generation TPU capacity that we expect to come online starting in 2027."
+      ],
+      "sha256": "d0df5c649700a3d68bb4b08ae25fe09e7ca56b064f4a4b6adce7d48718a92e3e"
+    },
+    {
+      "name": "amd_meta_announcement.html",
+      "provider": "AMD SEC exhibit",
+      "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000045/pressreleasedatedfebruary2.htm",
+      "published_at": "2026-02-24T23:59:59-05:00",
+      "source_class": "sec_regulatory",
+      "quotes": [
+        "AMD and Meta agree to a definitive multi-year, multi-generation partnership to deploy up to 6 gigawatts of AMD Instinct\u2122 GPUs"
+      ],
+      "sha256": "00b37c3b5bcae3b4db2c407df52939fad7614fa5d6e93e71e8d0808e7bffac04"
+    }
+  ],
+  "failures": []
+}

@@ -114,4 +114,4 @@ def run_rating(final_state: dict) -> str:
 
 def is_review(signal: str) -> bool:
     """Whether a signal is the non-tradeable REVIEW sentinel (#1170)."""
-    return signal == RATING_REVIEW
+    return signal in {RATING_REVIEW, "WATCHLIST", "INSUFFICIENT_DATA"}

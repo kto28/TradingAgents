@@ -28,7 +28,7 @@ def create_bull_researcher(llm):
             else "Asset fundamentals report (may be unavailable for crypto)"
         )
 
-        prompt = f"""You are a Bull Analyst advocating for investing in the {target_label}. Your task is to build a strong, evidence-based case emphasizing growth potential, competitive advantages, and positive market indicators. Leverage the provided research and data to address concerns and counter bearish arguments effectively.
+        prompt = f"""You are a Bull Analyst evaluating evidence for upside scenarios in the {target_label}. Identify growth potential and competitive advantages only when supported by retrieved evidence. Acknowledge adverse facts and missing information; your role does not require a bullish conclusion.
 
 Key points to focus on:
 - Growth Potential: Highlight the company's market opportunities, revenue projections, and scalability.
@@ -45,7 +45,7 @@ Latest world affairs news: {news_report}
 {fundamentals_label}: {fundamentals_report}
 Conversation history of the debate: {history}
 Last bear argument: {current_response}
-Use this information to deliver a compelling bull argument, refute the bear's concerns, and engage in a dynamic debate that demonstrates the strengths of the bull position.
+Compare source quality and compatible financial periods. Preserve FACT, ESTIMATE, INFERENCE, HYPOTHESIS and UNKNOWN labels. Accept valid counterevidence. Do not invent statistics, research citations, confidence scores or insider motives to strengthen an argument.
 """ + get_language_instruction()
 
         response = llm.invoke(prompt)

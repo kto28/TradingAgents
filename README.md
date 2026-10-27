@@ -115,6 +115,20 @@ The selected analysts work at the same time, each on its own tools, and the rese
 
 ## Installation and CLI
 
+### Evidence integrity controls (local upgrade)
+
+This checkout adds source records, financial and session validation, SEC
+ownership parsing, deterministic risk checks and Traditional Chinese evidence
+reports. Enable `TRADINGAGENTS_VERIFICATION_MODE=strict` to quarantine unsupported
+claims before debate and independently validate the final recommendation.
+Material gaps can return `INSUFFICIENT_DATA`; this remains research-only.
+
+See [setup, strict mode, offline replay and tests](docs/integrity/README.md),
+[architecture/NVDA audit](docs/integrity/AUDIT.md) and the
+[acceptance matrix](docs/integrity/ACCEPTANCE.md).
+The checked-in [revised NVDA report](examples/integrity/nvda_revised/complete_report.md)
+contains original source references and explicit limitations.
+
 ### Installation
 
 Clone TradingAgents:

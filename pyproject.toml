@@ -10,6 +10,11 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "cryptography>=42.0",
+    "defusedxml>=0.7.1",
+    "exchange-calendars>=4.5",
+    "pydantic>=2.0",
+    "numpy>=1.26",
+    "opencc>=1.1.9",
     "langchain-core>=1.6.5",
     "langchain-anthropic>=1.7.4",
     "langchain-google-genai>=4.4.0",

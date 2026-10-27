@@ -147,6 +147,31 @@ def test_a_full_run_reaches_a_logged_decision(tmp_path, monkeypatch, offline, st
     assert [e["rating"] for e in graph.memory_log.load_entries()] == ["Overweight"]
 
 
+@pytest.mark.parametrize("debug", [False, True])
+@pytest.mark.parametrize("checkpoint", [False, True])
+def test_strict_evidence_gate_blocks_fabrication_across_graph(tmp_path, monkeypatch, offline, debug, checkpoint):
+    from datetime import UTC, datetime
+
+    from tradingagents.integrity.collect import from_snapshot
+
+    monkeypatch.setattr("tradingagents.integrity.gates.collect", lambda *a, **k: from_snapshot(
+        "NVDA", datetime(2026, 1, 9, 21, tzinfo=UTC),
+        {"files": [], "gaps": ["offline provider unavailable"], "retrieved_at": "2026-01-09T21:00:00Z"},
+    ))
+    graph = _graph(tmp_path, monkeypatch, ScriptedModel(structured=True), debug=debug,
+                   verification_mode="strict", checkpoint_enabled=checkpoint)
+    state, signal = graph.propagate("NVDA", TRADE_DATE)
+    assert signal == "INSUFFICIENT_DATA"
+    assert not state["decision_validation"]["signal_actionable"]
+    assert "Street consensus" not in state["final_trade_decision"]
+    assert "Street consensus" in str(state["quarantined_outputs"])
+    assert not graph.memory_log.load_entries()
+    path = graph.save_reports(state, "NVDA")
+    assert "INSUFFICIENT_DATA" in path.read_text()
+    assert (path.parent / "evidence.json").exists()
+    assert not state["past_context"]
+
+
 @pytest.mark.unit
 def test_an_interrupted_run_resumes_from_its_checkpoint(tmp_path, monkeypatch, offline):
     model = ScriptedModel(fail_at=12)            # past the analysts, before the decision

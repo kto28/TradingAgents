@@ -8,6 +8,10 @@ _TRADINGAGENTS_HOME = os.path.join(os.path.expanduser("~"), ".tradingagents")
 # of the existing default, so users can keep writing plain strings in
 # their .env file.
 _ENV_OVERRIDES = {
+    "TRADINGAGENTS_VERIFICATION_MODE": "verification_mode",
+    "TRADINGAGENTS_EVIDENCE_SNAPSHOT": "evidence_snapshot",
+    "TRADINGAGENTS_DISPLAY_TIMEZONE": "display_timezone",
+    "TRADINGAGENTS_RESEARCH_PLAN": "research_plan_path",
     "TRADINGAGENTS_LLM_PROVIDER":         "llm_provider",
     "TRADINGAGENTS_DEEP_THINK_LLM":       "deep_think_llm",
     "TRADINGAGENTS_QUICK_THINK_LLM":      "quick_think_llm",
@@ -126,6 +130,11 @@ def build_default_config() -> dict:
         # Checkpoint/resume: when True, LangGraph saves state after each node
         # so a crashed run can resume from the last successful step.
         "checkpoint_enabled": False,
+        # off preserves legacy integrations; enable strict for evidence-gated research.
+        "verification_mode": "off",
+        "evidence_snapshot": "",
+        "display_timezone": "Asia/Hong_Kong",
+        "research_plan_path": "",
         # Output language for analyst reports and final decision
         # Internal agent debate stays in English for reasoning quality
         "output_language": "English",

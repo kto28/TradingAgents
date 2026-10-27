@@ -110,6 +110,26 @@ def test_default_is_none(monkeypatch):
     assert config["max_tokens"] is None
 
 
+def test_ollama_serializes_the_token_limit_in_its_supported_wire_field():
+    from tradingagents.llm_clients.openai_client import OpenAIClient
+
+    llm = OpenAIClient("qwen3:30b", provider="ollama", max_tokens=17).get_llm()
+    payload = llm._get_request_payload("hello")
+    assert payload["max_tokens"] == 17
+    assert "max_completion_tokens" not in payload
+    overridden = llm._get_request_payload("hello", max_completion_tokens=3)
+    assert overridden["max_tokens"] == 3
+
+
+def test_generic_compatible_provider_keeps_sdk_token_field():
+    from tradingagents.llm_clients.openai_client import OpenAIClient
+
+    llm = OpenAIClient("custom", provider="openai_compatible",
+                       base_url="http://localhost:1234/v1", max_tokens=17).get_llm()
+    payload = llm._get_request_payload("hello")
+    assert payload["max_completion_tokens"] == 17
+
+
 @pytest.mark.unit
 def test_env_override_sets_config(monkeypatch):
     config = _config_with_env(monkeypatch, TRADINGAGENTS_MAX_TOKENS="8192")

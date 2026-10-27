@@ -1,0 +1,98 @@
+{
+  "scope": "Selected material claims, not an exhaustive semantic audit",
+  "observations": [
+    {
+      "claim": "Revenue 96.221B USD",
+      "status": "VERIFIED",
+      "value": 96221000000.0,
+      "evidence_ids": [
+        "revenue:USD:2026-04-27:2026-07-26:0001045810-26-000075:Revenues"
+      ]
+    },
+    {
+      "claim": "Quarter described as calendar 2026 Q3",
+      "status": "CONTRADICTED",
+      "correction": "2026-04-27 through 2026-07-26; filing FY2027 Q2, accession 0001045810-26-000075",
+      "evidence_ids": [
+        "revenue:USD:2026-04-27:2026-07-26:0001045810-26-000075:Revenues"
+      ]
+    },
+    {
+      "claim": "Revenue YoY +47%",
+      "status": "CONTRADICTED",
+      "calculated_percent": 105.85114348672526,
+      "evidence_ids": [
+        "revenue:USD:2026-04-27:2026-07-26:0001045810-26-000075:Revenues",
+        "revenue:USD:2025-04-28:2025-07-27:0001045810-26-000075:Revenues"
+      ],
+      "method": "(current/prior - 1)*100, matching fiscal durations"
+    },
+    {
+      "claim": "Gross margin 63.66% attached to current quarterly results",
+      "status": "CONTRADICTED",
+      "calculated_percent": 74.97531723844068,
+      "evidence_ids": [
+        "gross_profit:USD:2026-04-27:2026-07-26:0001045810-26-000075:GrossProfit",
+        "revenue:USD:2026-04-27:2026-07-26:0001045810-26-000075:Revenues"
+      ]
+    },
+    {
+      "claim": "Assets 320.27 億 USD",
+      "status": "CONTRADICTED",
+      "source_base_usd": 320272000000.0,
+      "correct_yi_usd": 3202.72,
+      "evidence_ids": [
+        "assets:USD:None:2026-07-26:0001045810-26-000075:Assets"
+      ]
+    },
+    {
+      "claim": "FCF 47.006B attributed to 2026-07-26 cash-flow period",
+      "status": "UNVERIFIED",
+      "consistent_ytd_cfo_less_productive_asset_purchases": 69987000000.0,
+      "period": "2026-01-26 / 2026-07-26",
+      "limitation": "Broader productive-asset-purchases definition disclosed; do not mix quarterly, YTD and TTM FCF.",
+      "evidence_ids": [
+        "operating_cash_flow:USD:2026-01-26:2026-07-26:0001045810-26-000075:NetCashProvidedByUsedInOperatingActivities",
+        "productive_asset_purchases:USD:2026-01-26:2026-07-26:0001045810-26-000075:PaymentsToAcquireProductiveAssets"
+      ]
+    },
+    {
+      "claim": "45% of FCF consists of receivables",
+      "status": "CONTRADICTED",
+      "correction": "Definition error: receivables are a balance-sheet asset, not a component of the FCF cash-flow formula."
+    },
+    {
+      "claim": "JPMorgan 2026-10-10 cut 2027 growth from 47% to 35%",
+      "status": "UNVERIFIED",
+      "correction": "No retrieved original document. Cannot establish whether such a report exists; citation is blocked."
+    },
+    {
+      "claim": "Huang March transfers are new awards/bullish purchases",
+      "status": "CONTRADICTED",
+      "source": "0001197649-26-000005.xml",
+      "correction": "F tax withholding; G trust transfers documented in footnotes."
+    },
+    {
+      "claim": "Kress March sale shows unplanned bearish timing",
+      "status": "UNVERIFIED",
+      "source": "0001588670-26-000010.xml",
+      "correction": "62,650 shares sold under disclosed 10b5-1 plan; motive not established."
+    },
+    {
+      "claim": "Stevens liquidated all holdings",
+      "status": "CONTRADICTED",
+      "source": "0001199039-26-000012.xml",
+      "correction": "Remaining sale-trust shares 3,358,770; directly held 11,544,612; Envy Trust 15,017,750. Sale price is not cost basis."
+    },
+    {
+      "claim": "2026-10-27 daily candle confirms signal",
+      "status": "UNVERIFIED",
+      "correction": "Report clock interpreted as 11:17:23 New York; session incomplete. Last completed session 2026-10-26."
+    },
+    {
+      "claim": "4.2/5 confidence and PEG 0.26 implies 74% undervaluation",
+      "status": "UNVERIFIED",
+      "correction": "No calibration or valuation model establishes either conclusion."
+    }
+  ]
+}

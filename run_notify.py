@@ -33,6 +33,7 @@ def send_file(path, caption=""):
 
 
 NAMES_ZH = {
+    "Evidence Collection": "證據收集", "Fact Gate": "事實核查", "Decision Gate": "最終決策驗證",
     "Market Analyst": "技術分析師", "Social Analyst": "情緒分析師", "Sentiment Analyst": "情緒分析師",
     "News Analyst": "新聞分析師", "Fundamentals Analyst": "基本面分析師",
     "Bull Researcher": "看好研究員", "Bear Researcher": "看淡研究員", "Research Manager": "研究經理",
@@ -51,20 +52,26 @@ class ProgressGraph:
                          + ["Research Manager", "Trader"]
                          + ["Aggressive Analyst", "Conservative Analyst", "Neutral Analyst"] * config["max_risk_discuss_rounds"]
                          + ["Portfolio Manager"])
+        self.protected = config.get("verification_mode", "off") != "off"
+        if self.protected:
+            self.sequence = ["Fact Gate", *self.sequence, "Decision Gate"]
         self.done = []
 
     @property
     def total(self):
-        return len(self.analysts) + len(self.sequence)
+        return len(self.analysts) + len(self.sequence) + int(self.protected)
 
     def status(self):
         done_analysts = [a for a in self.analysts if a in self.done]
-        seq_done = len([n for n in self.done if n not in self.analysts and n != "Memory Log"])
-        if len(done_analysts) < len(self.analysts):
+        seq_done = len([n for n in self.done if n in self.sequence])
+        collected = int(self.protected and "Evidence Collection" in self.done)
+        if self.protected and not collected:
+            running = ["Evidence Collection"]
+        elif len(done_analysts) < len(self.analysts):
             running = [a for a in self.analysts if a not in self.done]
         else:
             running = self.sequence[seq_done:seq_done + 1]
-        return len(done_analysts) + seq_done, [NAMES_ZH.get(n, n) for n in running]
+        return len(done_analysts) + seq_done + collected, [NAMES_ZH.get(n, n) for n in running]
 
     def invoke(self, graph_input, **args):
         args["stream_mode"] = ["updates", "values"]
@@ -85,7 +92,8 @@ def report_progress(progress, ticker, trade_date, started, stop):
                       f"已運行 {(time.time() - started) / 60:.0f} 分鐘\n"
                       f"進行中：{'、'.join(running) or '收尾中'}")
         except requests.RequestException as e:
-            print(f"progress notify failed: {e}", file=sys.stderr)
+            # requests exception text may contain the bot token in its URL.
+            print(f"progress notify failed: {type(e).__name__}", file=sys.stderr)
 
 
 PROGRESS_INTERVAL = int(os.environ.get("PROGRESS_INTERVAL", 600))

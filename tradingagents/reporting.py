@@ -133,4 +133,9 @@ def write_report_tree(final_state: dict, ticker: str, save_path, settings: dict 
         for _agent, filename, _path in agents:
             if (folder, filename) not in current_files:
                 (save_path / folder / filename).unlink(missing_ok=True)
+    if final_state.get("decision_validation") and final_state.get("evidence"):
+        from tradingagents.integrity.report import write
+        write(final_state, ticker, save_path, settings)
+        if not html:
+            (save_path / "complete_report.html").unlink(missing_ok=True)
     return save_path / "complete_report.md"

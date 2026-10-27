@@ -33,7 +33,7 @@ def create_research_manager(llm):
 - **Underweight**: Cautious view; recommend trimming exposure
 - **Sell**: Strong conviction in the bear thesis; recommend exiting or avoiding the position
 
-The debate always contains conflicting arguments; deciding which side is stronger is the job, so conflict alone is not a reason to Hold. Commit to the side with the stronger case, sized by how decisively it wins. Choose Hold only when the evidence is still balanced after that weighing, or too thin to support a call; do not manufacture a direction to appear decisive. Weigh the bull and bear cases on their merits, independent of which side spoke first or last.
+Evaluate original evidence, not rhetorical force or agent agreement. Repeated assertions from the same source are not independent corroboration. Preserve FACT, ESTIMATE, INFERENCE, HYPOTHESIS and UNKNOWN labels. Conflicting arguments alone are not a reason to Hold; material evidence gaps are a separate validation issue. Missing or contradicted material evidence must be disclosed; do not manufacture a direction to appear decisive. The independent decision gate may return INSUFFICIENT_DATA regardless of this preliminary rating.
 
 ---
 

@@ -107,7 +107,8 @@ class GraphSetup:
         self.max_tool_rounds = max_tool_rounds
 
     def setup_graph(
-        self, selected_analysts=("market", "social", "news", "fundamentals"), memory_node=None
+        self, selected_analysts=("market", "social", "news", "fundamentals"), memory_node=None,
+        integrity_config=None,
     ):
         """Set up and compile the agent workflow graph.
 
@@ -139,11 +140,40 @@ class GraphSetup:
         conservative_analyst = create_conservative_debator(self.quick_thinking_llm)
         portfolio_manager_node = create_portfolio_manager(self.deep_thinking_llm)
 
+        protected = integrity_config and integrity_config.get("verification_mode", "off") != "off"
+        if protected:
+            from tradingagents.integrity.gates import (
+                analyst_gate,
+                collect_node,
+                final_gate,
+                guarded_node,
+            )
+            bull_researcher_node = guarded_node(bull_researcher_node, "Bull Researcher")
+            bear_researcher_node = guarded_node(bear_researcher_node, "Bear Researcher")
+            research_manager_node = guarded_node(research_manager_node, "Research Manager")
+            trader_node = guarded_node(trader_node, "Trader")
+            aggressive_analyst = guarded_node(aggressive_analyst, "Aggressive Analyst")
+            conservative_analyst = guarded_node(conservative_analyst, "Conservative Analyst")
+            neutral_analyst = guarded_node(neutral_analyst, "Neutral Analyst")
+            portfolio_manager_node = guarded_node(portfolio_manager_node, "Portfolio Manager")
+
         workflow = StateGraph(AgentState)
 
         for spec in plan.specs:
-            workflow.add_node(spec.agent_node,
-                              _analyst_graph(spec, analyst_factories[spec.key](), self.max_tool_rounds))
+            if protected and integrity_config.get("evidence_snapshot"):
+                # A replay must not quietly fetch different live news/prices.
+                # Same analyst roles/model; frozen ledger replaces external tools.
+                def frozen_analyst(state, role=spec.agent_node, report_key=spec.report_key):
+                    response = self.quick_thinking_llm.invoke(
+                        state["instrument_context"] + f"\nYou are {role}. "
+                        "Use only the frozen ledger. Return the claims JSON contract. "
+                        "For missing relevant evidence return {\"claims\": []}. No external tools are available."
+                    )
+                    return {report_key: response.content}
+                workflow.add_node(spec.agent_node, frozen_analyst)
+            else:
+                workflow.add_node(spec.agent_node,
+                                  _analyst_graph(spec, analyst_factories[spec.key](), self.max_tool_rounds))
 
         workflow.add_node("Bull Researcher", bull_researcher_node)
         workflow.add_node("Bear Researcher", bear_researcher_node)
@@ -161,9 +191,19 @@ class GraphSetup:
         if memory_node is not None:
             workflow.add_node("Memory Log", memory_node)
             first_steps.append("Memory Log")
-        for node in first_steps:
-            workflow.add_edge(START, node)
-        workflow.add_edge(first_steps, "Bull Researcher")
+        if protected:
+            workflow.add_node("Evidence Collection", collect_node(integrity_config))
+            workflow.add_node("Fact Gate", analyst_gate)
+            workflow.add_node("Decision Gate", final_gate)
+            workflow.add_edge(START, "Evidence Collection")
+            for node in first_steps:
+                workflow.add_edge("Evidence Collection", node)
+            workflow.add_edge(first_steps, "Fact Gate")
+            workflow.add_edge("Fact Gate", "Bull Researcher")
+        else:
+            for node in first_steps:
+                workflow.add_edge(START, node)
+            workflow.add_edge(first_steps, "Bull Researcher")
 
         # Both research-debate edges share the complete DEBATE_PATH_MAP (#1088).
         for debate_node in ("Bull Researcher", "Bear Researcher"):
@@ -182,6 +222,10 @@ class GraphSetup:
                 RISK_ANALYSIS_PATH_MAP,
             )
 
-        workflow.add_edge("Portfolio Manager", END)
+        if protected:
+            workflow.add_edge("Portfolio Manager", "Decision Gate")
+            workflow.add_edge("Decision Gate", END)
+        else:
+            workflow.add_edge("Portfolio Manager", END)
 
         return workflow

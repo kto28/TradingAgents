@@ -23,6 +23,15 @@ from typing import Literal
 
 from pydantic import BaseModel, Field, field_validator
 
+from tradingagents.integrity.evidence import Claim
+
+
+def _evidence_block(claims) -> str:
+    if not claims:
+        return ""
+    import json
+    return "\n```json\n" + json.dumps({"claims": [c.model_dump(mode="json") for c in claims]}) + "\n```"
+
 # LLMs sometimes write a placeholder string ("None", "N/A", ...) into an optional
 # numeric field instead of omitting it. Coerce those to None so the structured
 # call validates instead of erroring (#1058). Pydantic still parses real numeric
@@ -101,6 +110,7 @@ class ResearchPlan(BaseModel):
     instructions the trader can execute against.
     """
 
+    evidence_claims: list[Claim] = Field(default_factory=list, description="Exact ledger-backed claims; do not invent evidence IDs.")
     recommendation: PortfolioRating = Field(
         description=(
             "The investment recommendation. Exactly one of Buy / Overweight / "
@@ -135,7 +145,7 @@ def render_research_plan(plan: ResearchPlan) -> str:
         f"**Rationale**: {plan.rationale}",
         "",
         f"**Strategic Actions**: {plan.strategic_actions}",
-    ])
+    ]) + _evidence_block(plan.evidence_claims)
 
 
 # ---------------------------------------------------------------------------
@@ -152,6 +162,7 @@ class TraderProposal(BaseModel):
     entry, stop-loss, and sizing.
     """
 
+    evidence_claims: list[Claim] = Field(default_factory=list, description="Exact ledger-backed claims; do not invent evidence IDs.")
     action: TraderAction = Field(
         description="The transaction direction. Exactly one of Buy / Hold / Sell.",
     )
@@ -210,7 +221,7 @@ def render_trader_proposal(proposal: TraderProposal) -> str:
         "",
         f"FINAL TRANSACTION PROPOSAL: **{proposal.action.value.upper()}**",
     ])
-    return "\n".join(parts)
+    return "\n".join(parts) + _evidence_block(proposal.evidence_claims)
 
 
 # ---------------------------------------------------------------------------
@@ -227,6 +238,7 @@ class PortfolioDecision(BaseModel):
     the rating-scale guidance.
     """
 
+    evidence_claims: list[Claim] = Field(default_factory=list, description="Exact ledger-backed claims; do not invent evidence IDs.")
     rating: PortfolioRating = Field(
         description=(
             "The final position rating. Exactly one of Buy / Overweight / Hold / "
@@ -285,7 +297,7 @@ def render_pm_decision(decision: PortfolioDecision) -> str:
     target = decision.price_target if decision.price_target is not None else "not provided"
     parts.extend(["", f"**Price Target**: {target}"])
     parts.extend(["", f"**Time Horizon**: {decision.time_horizon or 'not provided'}"])
-    return "\n".join(parts)
+    return "\n".join(parts) + _evidence_block(decision.evidence_claims)
 
 
 # ---------------------------------------------------------------------------

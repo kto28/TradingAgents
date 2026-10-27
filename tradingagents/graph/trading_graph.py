@@ -68,6 +68,8 @@ class TradingAgentsGraph:
         """
         self.debug = debug
         self.config = config or DEFAULT_CONFIG
+        if self.config.get("verification_mode", "off") not in {"off", "audit", "strict"}:
+            raise ValueError("verification_mode must be off, audit or strict")
         self.callbacks = callbacks or []
 
         set_config(self.config)
@@ -109,7 +111,10 @@ class TradingAgentsGraph:
         self.selected_analysts = tuple(selected_analysts)
 
         # Set up the graph: keep the workflow for recompilation with a checkpointer.
-        self.workflow = self.graph_setup.setup_graph(selected_analysts, memory_node=self._memory_step)
+        self.workflow = self.graph_setup.setup_graph(
+            selected_analysts, memory_node=self._memory_step,
+            **({"integrity_config": self.config} if self.config.get("verification_mode", "off") != "off" else {}),
+        )
         self.graph = self.workflow.compile()
         self._checkpointer_ctx = None
         self._resuming = False
@@ -124,6 +129,8 @@ class TradingAgentsGraph:
         path and the CLI call this so the resolved identity reaches the whole
         graph regardless of entry point.
         """
+        if self.config.get("verification_mode", "off") != "off" and self.config.get("evidence_snapshot"):
+            return build_instrument_context(ticker, asset_type, {}, trade_date)
         identity = resolve_instrument_identity(ticker)
         return build_instrument_context(ticker, asset_type, identity, trade_date)
 
@@ -316,6 +323,8 @@ class TradingAgentsGraph:
         does not end the run: the analysts' work is kept, the lessons already in
         the log are used, and the report says what could not be settled.
         """
+        if self.config.get("verification_mode") == "strict":
+            return {"past_context": "", "memory_note": "Strict verification excludes unvalidated legacy memory."}
         note = ""
         try:
             # Another run settling the same log does the work; this one goes on.
@@ -360,6 +369,8 @@ class TradingAgentsGraph:
         """Record a finished run: its state log, and its decision in the memory log
         for reflection on the next same-ticker run. propagate() and the CLI both end here."""
         self._log_state(trade_date, final_state)
+        if final_state.get("decision_validation") and not final_state["decision_validation"]["signal_actionable"]:
+            return
         decision = final_state.get("final_trade_decision")
         if not decision:
             logger.warning("No final decision for %s on %s; nothing added to the memory log",
@@ -367,7 +378,7 @@ class TradingAgentsGraph:
             return
         self.memory_log.store_decision(
             ticker=company_name, trade_date=trade_date, final_trade_decision=decision,
-            rating=run_rating(final_state),
+            rating=run_rating(final_state).title() if final_state.get("decision_validation") else run_rating(final_state),
         )
 
     def _run_graph(self, company_name, trade_date, asset_type: str = "stock",

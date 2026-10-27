@@ -1,0 +1,26 @@
+{
+  "server_version": "0.32.13",
+  "model": "qwen3:30b",
+  "endpoint": "http://localhost:11434/v1/chat/completions",
+  "requested_limit": 1,
+  "observations": [
+    {
+      "field": "max_completion_tokens",
+      "completion_tokens": 651,
+      "finish_reason": "stop",
+      "duration_seconds": 6.667941958643496
+    },
+    {
+      "field": "max_tokens",
+      "completion_tokens": 1,
+      "finish_reason": "length",
+      "duration_seconds": 0.10297462530434132
+    }
+  ],
+  "full_run_attempt": {
+    "completed": false,
+    "stopped_after_seconds_approximately": 1021,
+    "reason": "Configured 2048-token limit was serialized as the unsupported max_completion_tokens field. Stopped the experiment; no completed result claimed."
+  },
+  "correction": "Ollama-specific client maps SDK max_completion_tokens to max_tokens on the wire; other providers unchanged."
+}
